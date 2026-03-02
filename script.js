@@ -75,6 +75,15 @@ const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
+        // gather data from the form and save locally for receptionist interface
+        const name = contactForm.querySelector('input[type="text"]').value.trim();
+        const email = contactForm.querySelector('input[type="email"]').value.trim();
+        const project = contactForm.querySelector('select').value;
+        const message = contactForm.querySelector('textarea').value.trim();
+        const existing = JSON.parse(localStorage.getItem('clients') || '[]');
+        existing.push({ id: Date.now(), name, email, project, message });
+        localStorage.setItem('clients', JSON.stringify(existing));
+
         alert('Merci pour votre message ! Nous reviendrons vers vous rapidement.');
         contactForm.reset();
     });
